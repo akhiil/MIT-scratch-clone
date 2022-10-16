@@ -1,15 +1,13 @@
-import React from "react";
-import Sidebar from "./components/Sidebar";
-import MidArea from "./components/MidArea";
-import PreviewArea from "./components/PreviewArea";
-import { DragDropContext } from "react-beautiful-dnd";
-import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import GitHubIcon from "@material-ui/icons/GitHub";
+import React from 'react'
+import Sidebar from './components/Sidebar'
+import MidArea from './components/MidArea'
+import PreviewArea from './components/PreviewArea'
+import { DragDropContext } from 'react-beautiful-dnd'
+import { connect } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,36 +19,36 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-}));
+}))
 
 function App({ complist, update_list }) {
-  const classes = useStyles();
+  const classes = useStyles()
 
   // Update Lists of Mid Area
   const onDragEnd = (result) => {
-    let element = result.draggableId.split("-")[0];
+    let element = result.draggableId.split('-')[0]
 
-    const old_list = complist.midAreaLists;
+    const old_list = complist.midAreaLists
     let source_index = old_list.findIndex(
-      (x) => x.id === result.source.droppableId
-    );
+      (x) => x.id === result.source.droppableId,
+    )
     if (source_index > -1) {
-      let comp_list = old_list[source_index].comps;
-      comp_list.splice(result.source.index, 1);
-      old_list[source_index].comps = comp_list;
+      let comp_list = old_list[source_index].comps
+      comp_list.splice(result.source.index, 1)
+      old_list[source_index].comps = comp_list
     }
 
     let dest_index = old_list.findIndex(
-      (x) => x.id === result.destination.droppableId
-    );
+      (x) => x.id === result.destination.droppableId,
+    )
 
     if (dest_index > -1) {
-      let dest_comp_list = old_list[dest_index].comps;
-      dest_comp_list.splice(result.destination.index, 0, `${element}`);
+      let dest_comp_list = old_list[dest_index].comps
+      dest_comp_list.splice(result.destination.index, 0, `${element}`)
 
-      old_list[dest_index].comps = dest_comp_list;
+      old_list[dest_index].comps = dest_comp_list
     }
-  };
+  }
   return (
     <div className="bg-blue-100 font-sans">
       <div className={classes.root}>
@@ -59,14 +57,6 @@ function App({ complist, update_list }) {
             <Typography variant="h6" className={classes.title}>
               MIT Scratch Clone
             </Typography>
-            <Button color="inherit">
-              <GitHubIcon
-                onClick={() =>
-                  (window.location.href =
-                    "https://github.com/peeyush14goyal/MIT-Scratch-Clone")
-                }
-              />
-            </Button>
           </Toolbar>
         </AppBar>
       </div>
@@ -83,14 +73,14 @@ function App({ complist, update_list }) {
         </DragDropContext>
       </div>
     </div>
-  );
+  )
 }
 
 // mapping state to props
 const mapStateToProps = (state) => {
   return {
     complist: state.list,
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)
